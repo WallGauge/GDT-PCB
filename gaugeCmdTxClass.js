@@ -66,9 +66,9 @@ class gaugeCmdTxClass {
     loopTx(encodedCmd) {
         clearTimeout(txTimeoutLoop);
         txTimeoutLoop = setTimeout(() => {
-            tx(encodedCmd)
+            this.tx(encodedCmd)
                 .then((rslt) => {
-                    loopTx(encodedCmd);
+                    this.loopTx(encodedCmd);
                 })
                 .catch((err) => {
                     console.error('Error with tx call:', err);
