@@ -3,14 +3,21 @@ const cfg = require('./testConfig.json');
 
 const gcTx = new GaugeCmdTxClass(cfg.irdLedPin);
 
-console.log('Sending goto raw position 100')
-let cmdToSend = gcTx.encode(1, 8, 100);
+var wallGaugeAdd = 1        // Valid range 1 to 255
+var wallGuageCmd = 8        // Valid range 0 to 15
+var wallGaugeData = 100     // Valid range is 0 to 4095
+printCommands()
+
+console.log('Sending test data to a WallGauge with the address of ' + wallGaugeAdd + ', command number = ' + wallGuageCmd + ', data value = ' + wallGaugeData);
+let cmdToSend = gcTx.encode(wallGaugeAdd, wallGuageCmd, wallGaugeData);
 gcTx.loopTx(cmdToSend);
 
-setTimeout(()=>{
-    console.log('Sending goto raw postion 200')
-    let cmdToSend = gcTx.encode(1, 8, 200);
-gcTx.loopTx(cmdToSend);
+setTimeout(() => {
+    console.log('After 60 seconds sending new command...');
+    wallGaugeData = 200;
+    console.log('Sending test data to a WallGauge with the address of ' + wallGaugeAdd + ', command number = ' + wallGuageCmd + ', data value = ' + wallGaugeData);
+    let cmdToSend = gcTx.encode(wallGaugeAdd, wallGuageCmd, wallGaugeData);
+    gcTx.loopTx(cmdToSend);
 }, 60000);
 
 function printCommands() {
@@ -26,4 +33,5 @@ function printCommands() {
     console.log(' 9	Set Raw Stepper Value and stay awake');
     console.log('10	LED CMD data value: 0=off, 1=on, 2=on when awake');
     console.log('15	Identify gauge and set start cycle sleep (seconds from now, 0 = cancel)');
+    console.log('----------------------------------------------------------------------------\n');
 }
