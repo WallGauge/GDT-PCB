@@ -27,7 +27,7 @@ We have included test software for making calls to this hardware in this GitHub 
 ### Hardware Requirements
 
 1. Raspberry Pi Zero WH
-1. WallGauge.com Gauge Data Transmitter - Printed Circuit Board (GDT-PCB).
+1. WallGauge's GDT-PCB
 
 ### Software Requirements (must be installed before Install)
 
