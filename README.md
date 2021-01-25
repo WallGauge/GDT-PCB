@@ -2,6 +2,8 @@
 
 ![pic](./pics/gdt-PCB.png)
 
+![pic](./pics/gdt-PCB_bottom.png)
+
 ## Overview
 
 The GDT-PCB is a small circuit board designed to plug into the Raspberry Pi Zero WH expansion header.  The PCB is soldered to the top of a 40 pin female header allowing it to easily slide on to the Raspberry Pi Zero WH male header. The GDT-PCB is fitted with two super-bright 5mm infrared (940nm) LEDs, red and green LEDs, and a normally open push button.
@@ -45,3 +47,5 @@ Warning! Do not change the Raspberry Pi's video memory allocation from the defau
 3) To run the test app type `node testMe`. If you get an error you may need to run it with the sudo command.  Running node scripts as root is not recommended for production apps.  
 
 See the testMe.js app for an example of how to make calls to the GDT-PCB.
+
+![pic](./pics/gdt-pcb_pin1.png)
