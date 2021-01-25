@@ -2,5 +2,5 @@
     "buttonPin": "40",
     "ledGreenPin": "8",
     "ledRedPin": "10",
-    "irdLedPiin": "18"
+    "irdLedPin": "18"
 }
