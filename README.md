@@ -1,6 +1,6 @@
 # GDT-PCB Infrared Printed Circuit Board
 
-![pic](./pics/gdt-pcb.png)
+![pic](./pics/gdt-PCB.png)
 
 ## Overview
 
