@@ -20,5 +20,28 @@ The push button connected to GPIO-21 (pin 40) is a normally open momentary conta
 
 The GDT-PCB is sensitive to electrostatic discharge (ESD).  You must practice proper ESD handling techniques when handling the GDT-PCB.  Examples are using an electrostatic wrist strap and an ESD bench mat. 
 
-# GDT-PCB Software
+## GDT-PCB Demo Software
 
+We have included test software for making calls to this hardware in this GitHub repo.  The node.js class gaugeCmdTxClass.js can be used as a driver for sending commands to our GDT-PCB hardware.
+
+### Hardware Requirements
+
+1. Raspberry Pi Zero WH
+1. WallGauge.com Gauge Data Transmitter - Printed Circuit Board (GDT-PCB).
+
+### Software Requirements (must be installed before Install)
+
+1. Raspbian
+2. Node.js v10.18.1
+3. git
+4. pigpio `sudo apt-get update` and then `sudo apt-get install pigpio`
+
+Warning! Do not change the Raspberry Pi's video memory allocation from the default value.  pigpio uses this memory for pin communications.
+
+### Install
+
+1) type: `git clone https://github.com/WallGauge/GDT-PCB.git`
+2) then type: `cd GDT-PCB` and `npm install`
+3) To run the test app type `node testMe`. If you get an error you may need to run it with the sudo command.  Running node scripts as root i is not recommended for production apps.  
+
+See the testMe.js app for an exampl of how to make calls to the GDT-PCB.

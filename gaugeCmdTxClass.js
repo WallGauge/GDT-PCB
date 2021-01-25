@@ -1,4 +1,3 @@
-const EventEmitter = require('events');
 const cp = require('child_process');
 
 const logLevel = 2
@@ -14,12 +13,27 @@ var globalLastTxTime = new Date();
 var txTimeoutLoop = {};
 
 class gaugeCmdTxClass {
+    /**
+     * This class is provided as a sample driver for the WallGauge GDT-PCB.  To send a gauge command first call the encode method to get an encoded command.
+     * Then send the encoded command to the WallGauge by passing it to the loopTx method.
+     * @param {number} irdLedPin Defaults to 18. This is the pin that drives the infred LEDs 
+     * @param {number} modFreq Defaults to 33000. This is the modulation frequency used by the pins hardware PWM circuit
+     * @param {string} irtxPath Defaults to './C/irTx'. This is the locaiton of the C utility that controls the hardware pin
+     */
     constructor(irdLedPin = Default_irdLedPin, modFreq = Default_modFreq, irtxPath = Default_irtxPath) {
         this.irdLedPin = irdLedPin;
         this.modFreq = modFreq;
         this.irtxPath = irtxPath;
     };
 
+    /**
+     * Creates a command that can be transmitted to a WallGauge from an Address, Command, and Value passed to the method.
+     * This method will throw if any of the paremters are out of range.
+     * @param {number} address valid range 1 to 255
+     * @param {number} cmdNum valid range 0 to 15
+     * @param {number} value valid range is 0 to 4095
+     * @returns {number} returns a 32 bit number representing the encoded command
+     */
     encode(address = 1, cmdNum = 0, value = 0) {
         if (value < 0 || value > 4095) {
             throw ('encode called with invalid value = ' + value);
@@ -63,10 +77,18 @@ class gaugeCmdTxClass {
         return encodedValue;
     };
 
+    /**
+     * This method will continually send an encoded command to all WallGauges in the same room as the GDT-PCB.
+     * Since WallGauges sleep for most of the time, commands must be sent over and over for them be received when they wake up and listen for data.
+     * All gauges within range will receive this command but only the gauge with the matching gauge address will respond to it.  
+     * 
+     * To send a new command just call this method again with the new encoded command and it will replace the existing command that is being sent.
+     * @param {number} encodedCmd 
+     */
     loopTx(encodedCmd) {
         clearTimeout(txTimeoutLoop);
         txTimeoutLoop = setTimeout(() => {
-            this.tx(encodedCmd)
+            this._tx(encodedCmd)
                 .then((rslt) => {
                     this.loopTx(encodedCmd);
                 })
@@ -76,7 +98,14 @@ class gaugeCmdTxClass {
         }, txDelay);
     };
 
-    tx(encodedCommand) {
+    /**
+     * This method calls C utility that drives the GDT-PCB infrared LED pin.  You shouldn't need to call this method directly. Instead use the lootTx method to send your command.
+     * Do not call this method more than every 200mS as that may damage the power transistors on the PCB or the infrared LEDs
+     * This class will reject its promise if called too often. 
+     * @param {number} encodedCommand 
+     * @returns {Promise}
+     */
+    _tx(encodedCommand) {
         return new Promise((resolve, reject) => {
             if (globalTxLocked == true) {
                 console.error('irdServer irdTx command still in progress skipping!');

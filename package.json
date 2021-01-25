@@ -1,17 +1,17 @@
 {
-    "name": "gauge-cmd-tx-class",
-    "version": "0.1.0",
-    "description": "Driver for WallGauge GDT-PCB",
-    "main": "gaugeCmdTxClass.js",
-    "scripts": {
-      "test": "testMe.js"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/WallGauge/GDT-PCB.git"
-    },
-    "author": "John Rucker",
-    "license": "MIT",
-    "homepage": "https://WallGauge.com",
-    "dependencies": {}
-  }
+  "name": "gauge-cmd-tx-class",
+  "version": "0.1.0",
+  "description": "Driver for WallGauge GDT-PCB",
+  "main": "gaugeCmdTxClass.js",
+  "scripts": {
+    "test": "testMe.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WallGauge/GDT-PCB.git"
+  },
+  "author": "John Rucker",
+  "license": "MIT",
+  "homepage": "https://WallGauge.com",
+  "dependencies": {}
+}
